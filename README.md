@@ -22,11 +22,13 @@ MonEntretienPro accorde une grande importance à la sécurité des données des 
 
 ## Comment Utiliser MonEntretienPro
 
-1. **Créez un Compte** : Commencez par créer un compte utilisateur sur MonEntretienPro.
+1. **Créez votre Espace** : Commencez par créer votre espace sur MonEntretienPro.
 
-2. **Ajoutez vos Candidatures** : Ajoutez les détails de chaque candidature, y compris l'entreprise, le poste, les étapes du processus de candidature, etc.
+2. **Connectez-vous** : Les identifiants par défaut sont admin/admin.
 
-3. **Organisez et Suivez** : Utilisez les fonctionnalités d'organisation pour classer vos candidatures et suivez leur progression à travers le processus de recrutement.
+3. **Ajoutez vos Candidatures** : Ajoutez les détails de chaque candidature, y compris l'entreprise, le poste, les étapes du processus de candidature, etc.
+
+4. **Organisez et Suivez** : Utilisez les fonctionnalités d'organisation pour classer vos candidatures et suivez leur progression à travers le processus de recrutement.
 
 ## Contributions
 
