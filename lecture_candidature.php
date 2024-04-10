@@ -6,9 +6,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-// Vérifie si l'utilisateur a le rôle d'administrateur ou de modification
-if ($_SESSION['role'] === 'administrateur') {
-    header('Location: modif_candidature.php?id=' . $_GET['id']);
+// Récupération du nom unique de cookie basé sur l'identifiant de l'utilisateur
+$cookieName = 'role_' . $_SESSION['nom_utilisateur'];
+
+// Vérification de l'existence du cookie
+if (!isset($_COOKIE[$cookieName])) {
+    // Si le cookie n'existe pas, redirige vers la page d'authentification
+    header('Location: index.php');
     exit;
 }
 
@@ -88,12 +92,12 @@ if (!empty($candidature['date_entretien']) && $candidature['statut'] === 'Entret
             <li><strong>Lien du poste :</strong> <?php echo $candidature['lien']; ?></li>
             <li><strong>Type de contrat :</strong> <?php echo $candidature['contrat']; ?></li>
             <li><strong>Disponibilité :</strong> <?php echo $candidature['disponibilite']; ?></li>
-            <li><strong>Personne à contacter :</strong> <?php echo $candidature['contact']; ?></li>
+            <li><strong>Personne à contacter :</strong></li><pre style="text-align: justify;"><?php echo $candidature['contact']; ?></pre>
             <li><strong>Statut de la candidature :</strong> <?php echo $candidature['statut']; ?></li>
             <li><strong>Méthode de candidature :</strong> <?php echo $candidature['applymethod']; ?></li>
             <li><strong>Date d'entretien :</strong> <?php echo date('d/m/Y H:i', strtotime($candidature['date_entretien'])); ?></li>
             <li><strong>Deuxième entretien :</strong> <?php echo $candidature['deuxieme_entretien'] ? 'Oui' : 'Non'; ?></li>
-            <li><strong>Observations :</strong> <?php echo $candidature['infostatut']; ?></li>
+            <li><strong>Observations :</strong></li><pre style="text-align: justify;"><?php echo $candidature['infostatut']; ?></pre>
             <li><strong>Salaire :</strong> <?php echo $candidature['salaire']; ?></li>
         </ul>
         <!-- Bouton pour exporter vers un fichier PDF -->

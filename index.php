@@ -36,9 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['loggedin'] = true;
             $_SESSION['nom_utilisateur'] = $_POST['nom_utilisateur'];
             
-            // Enregistrement du rôle dans un cookie
+            // Génération d'un nom unique de cookie basé sur l'identifiant de l'utilisateur
+            $cookieName = 'role_' . $_SESSION['nom_utilisateur'];
+            
+            // Enregistrement du rôle dans un cookie avec l'option HTTP Only
             $role = $utilisateur['role']; // Supposant que le rôle soit déjà enregistré dans le fichier JSON
-            setcookie('role', $role, time() + (86400 * 30), "/"); // Cookie valide pendant 30 jours
+            setcookie($cookieName, $role, time() + (86400 * 30), "/", "", false, true); // Cookie valide pendant 30 jours
             
             header('Location: dashboard.php');
             exit;

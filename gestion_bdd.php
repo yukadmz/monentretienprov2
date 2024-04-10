@@ -6,11 +6,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-// Vérifie si l'utilisateur a le rôle d'administrateur
-if ($_COOKIE['role'] !== 'administrateur') {
+// Récupération du nom unique de cookie basé sur l'identifiant de l'utilisateur
+$cookieName = 'role_' . $_SESSION['nom_utilisateur'];
+
+// Vérification de l'existence du cookie
+if (!isset($_COOKIE[$cookieName])) {
+    // Si le cookie n'existe pas, redirige vers la page d'authentification
+    header('Location: index.php');
+    exit;
+}
+
+// Vérifie si l'utilisateur a le rôle d'administrateur ou de modification
+if ($_COOKIE[$cookieName] !== 'administrateur') {
     header('Location: index.php'); // Remplacez "autre_page.php" par l'URL de la page vers laquelle vous souhaitez rediriger les utilisateurs non autorisés
     exit;
 }
+
 
 // Fonction pour récupérer les candidatures à partir du fichier JSON
 function getCandidatures() {
