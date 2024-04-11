@@ -42,6 +42,18 @@ if ($candidature === null) {
     header('Location: index.php'); // Redirige vers une autre page si la candidature n'existe pas
     exit;
 }
+
+
+
+            // Vérification si un fichier a été téléchargé
+            if(isset($_FILES['motivation']) && $_FILES['motivation']['error'] === UPLOAD_ERR_OK) {
+                // Déplacer le fichier téléchargé vers le répertoire de destination
+                $motivationPath = 'uploads/motivation_' . $idCandidature . '.pdf';
+                move_uploaded_file($_FILES['motivation']['tmp_name'], $motivationPath);
+                
+                // Afficher le bouton "Afficher" avec le chemin du fichier comme paramètre
+                echo '<button onclick="afficherFichier(\'' . $motivationPath . '\')">Afficher</button>';
+            }
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +65,13 @@ if ($candidature === null) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <script>
+    function afficherFichier(cheminFichier) {
+        // Ouvrir le fichier dans une nouvelle fenêtre ou un nouvel onglet
+        window.open(cheminFichier);
+    }
+</script>
+
 </head>
 <body>
 <?php include 'assets/include/navbar.php'; ?>
@@ -86,6 +105,10 @@ if (!empty($candidature['date_entretien']) && $candidature['statut'] === 'Entret
 ?>
         <ul>
             <li><strong>Date de candidature :</strong> <?php echo date('d/m/Y H:i', strtotime($candidature['applydate'])); ?></li>
+            <?php if (file_exists('uploads/motivation_' . $idCandidature . '.pdf')): ?>
+                <li><strong>Lettre de motivation : </strong><button type="button" onclick="afficherFichier('uploads/motivation_<?php echo $idCandidature; ?>.pdf')">Afficher la lettre de motivation</button><br><br>
+                <?php else: ?>
+                <?php endif; ?>
             <li><strong>Localisation :</strong> <?php echo $candidature['position']; ?></li>
             <li><strong>Entreprise :</strong> <?php echo $candidature['entreprise']; ?></li>
             <li><strong>Poste :</strong> <?php echo $candidature['poste']; ?></li>

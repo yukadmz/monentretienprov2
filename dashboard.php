@@ -85,29 +85,43 @@ function estCandidaturePasseeAncienne($candidature) {
         <div class="card">
             <h2><i class="fas fa-hourglass-start"></i> Candidatures en attente</h2>
             <?php // Lecture du contenu du fichier JSON
-            $candidatures = json_decode(file_get_contents('assets/data/candidatures.json'), true);
-            ?>
-            <?php
-            // Vérification s'il y a des candidatures en attente
-            $candidaturesEnAttente = array_filter($candidatures, function($candidature) {
-                return $candidature['statut'] === 'En attente';
-            });
+    $candidatures = json_decode(file_get_contents('assets/data/candidatures.json'), true);
+    ?>
+    <?php
+    // Vérification s'il y a des candidatures en cours
+    $candidaturesEnCours = array_filter($candidatures, function($candidature) {
+        return $candidature['statut'] === 'En attente';
+    });
 
-            if (!empty($candidaturesEnAttente)) :
-                foreach ($candidaturesEnAttente as $candidature) :
-                    // Vérifier si la candidature
-                    // est ancienne
-                    $estAncienne = estCandidatureAncienne($candidature);
-                    ?>
-                    <div class="card-dashboard">
-                        <a href='<?php echo ($_COOKIE[$cookieName] === 'administrateur' || $_COOKIE[$cookieName] === 'modification') ? "modif_candidature.php?id={$candidature['id']}" : "lecture_candidature.php?id={$candidature['id']}"; ?>'>
-                            <h3><?php
-                                // Afficher l'icône d'horloge en fonction de la date de candidature if ($estAncienne) { echo '<i class="fas fa-clock clock"></i>'; // Calcul de la durée entre la date de candidature et la date actuelle $applyDate = new DateTime($candidature['applydate']); $currentDate = new DateTime(); $diff = $currentDate->diff($applyDate); // Affichage de la durée echo $diff->format('  %a jours | <br>'); } echo $candidature['entreprise'] . ' - ' . $candidature['poste']; ?></h3> </a> </div> <?php
-endforeach;
-else :
-echo "<p>Aucune candidature en attente.</p>";
-endif;
-?> </div>    
+    if (!empty($candidaturesEnCours)) :
+        foreach ($candidaturesEnCours as $candidature) :
+            // Vérifier si la candidature est ancienne
+            $estAncienne = estCandidatureAncienne($candidature);
+            ?>
+            <div class="card-dashboard">
+                <a href='<?php echo ($_COOKIE[$cookieName] === 'administrateur' || $_COOKIE[$cookieName] === 'modification') ? "modif_candidature.php?id={$candidature['id']}" : "lecture_candidature.php?id={$candidature['id']}"; ?>'>
+                    <h3><?php
+                        // Afficher l'icône d'horloge en fonction de la date de candidature
+                        if ($estAncienne) {
+                            echo '<i class="fas fa-clock clock"></i>';
+                            // Calcul de la durée entre la date de candidature et la date actuelle
+                            $applyDate = new DateTime($candidature['applydate']);
+                            $currentDate = new DateTime();
+                            $diff = $currentDate->diff($applyDate);
+                            // Affichage de la durée
+                            echo $diff->format('  %a jours | <br>');
+                        }
+                        echo $candidature['entreprise'] . ' - ' . $candidature['poste'];
+                        ?></h3>
+                </a>
+            </div>
+        <?php
+        endforeach;
+    else :
+        echo "<p>Aucune candidature en cours.</p>";
+    endif;
+    ?> 
+</div>    
 
 <!-- Autres sections -->
 

@@ -32,12 +32,19 @@ if ($_COOKIE[$cookieName] !== 'administrateur' && $_COOKIE[$cookieName] !== 'mod
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <script>
+    function afficherFichier(cheminFichier) {
+        // Ouvrir le fichier dans une nouvelle fenêtre ou un nouvel onglet
+        window.open(cheminFichier);
+    }
+</script>
+
 </head>
 <body>
 <?php include 'assets/include/navbar.php'; ?>
-    <div class="container">
-        <h1>Modifier une candidature</h1>
-        <?php
+<div class="container">
+    <h1>Modifier une candidature</h1>
+    <?php
     // Récupération de l'identifiant unique de la candidature depuis l'URL
     $idCandidature = $_GET['id'] ?? null;
 
@@ -106,11 +113,25 @@ if ($_COOKIE[$cookieName] !== 'administrateur' && $_COOKIE[$cookieName] !== 'mod
                 echo "<p>Modifications enregistrées avec succès !</p>";
             }
 
+            // Vérification si un fichier a été téléchargé
+            if(isset($_FILES['motivation']) && $_FILES['motivation']['error'] === UPLOAD_ERR_OK) {
+                // Déplacer le fichier téléchargé vers le répertoire de destination
+                $motivationPath = 'uploads/motivation_' . $idCandidature . '.pdf';
+                move_uploaded_file($_FILES['motivation']['tmp_name'], $motivationPath);
+                
+                // Afficher le bouton "Afficher" avec le chemin du fichier comme paramètre
+                echo '<button onclick="afficherFichier(\'' . $motivationPath . '\')">Afficher</button>';
+            }
+
             // Affichage du formulaire de modification avec les données de la candidature
             ?>
+            
+            
                     <form action="supprimer_candidature.php?id=<?php echo $idCandidature; ?>" method="post" class="delete-btn-container">
                         <input type="submit" value="Supprimer" class="btn btn-red">
                     </form>
+                    
+                    
             <?php
 // Vérification si le statut n'est pas "Config", "En attente", "Refusée" ou "Acceptée"
 if (!in_array($candidature['statut'], ['Config', 'En attente', 'Refusée', 'Acceptée'])) {
@@ -124,23 +145,20 @@ if (!in_array($candidature['statut'], ['Config', 'En attente', 'Refusée', 'Acce
 }
 ?>
 
-            <?php
-// Vérification si une date d'entretien est notée et que le statut est "Entretien passé"
-if (!empty($candidature['date_entretien']) && $candidature['statut'] === 'Entretien passé') {
-    // Calcul de la durée entre la date de l'entretien et la date actuelle
-    $entretienDate = new DateTime($candidature['date_entretien']);
-    $currentDate = new DateTime();
-    $diff = $currentDate->diff($entretienDate);
-    
-    // Affichage de la durée
-    echo "<p style='text-align: center;'>Temps écoulé depuis le dernier entretien : " . $diff->format('%a jours') . "</p>";
-}
-?>
 
-                <form class="edit-form" action="modif_candidature.php?id=<?php echo $idCandidature; ?>" method="post">
-                    <!-- Champs du formulaire -->
-                    <label for="applydate">Date de candidature :</label>
-                    <input type="date" name="applydate" id="applydate" value="<?php echo $candidature['applydate']; ?>"><br><br>
+            <form class="edit-form" action="modif_candidature.php?id=<?php echo $idCandidature; ?>" method="post" enctype="multipart/form-data">
+                <!-- Champs du formulaire -->
+                <label for="applydate">Date de candidature :</label>
+                <input type="date" name="applydate" id="applydate" value="<?php echo $candidature['applydate']; ?>"><br><br>
+                
+                <?php if (file_exists('uploads/motivation_' . $idCandidature . '.pdf')): ?>
+                <label>Lettre de motivation :</label>
+                <button type="button" onclick="afficherFichier('uploads/motivation_<?php echo $idCandidature; ?>.pdf')">Afficher la lettre de motivation</button><br><br>
+                <?php else: ?>
+                <label for="motivation">Lettre de motivation :</label>
+                <input type="file" name="motivation"><br><br>
+                <?php endif; ?>
+                
                     
                     <label for="position">Localisation :</label>
                     <input type="text" name="position" id="position" value="<?php echo $candidature['position']; ?>"><br><br>

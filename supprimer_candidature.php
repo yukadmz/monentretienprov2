@@ -69,9 +69,18 @@ if ($idCandidature === null) {
 
         // Si la confirmation est donnée, supprimer la candidature
         if (isset($_POST['confirm'])) {
+            // Supprimer le fichier de lettre de motivation s'il existe
+            $motivationPath = 'uploads/motivation_' . $idCandidature . '.pdf';
+            if (file_exists($motivationPath)) {
+                unlink($motivationPath);
+            }
+            
+            // Supprimer la candidature du tableau des candidatures
             unset($candidatures[$key]);
             file_put_contents('assets/data/candidatures.json', json_encode($candidatures, JSON_PRETTY_PRINT));
+            
             echo "<p>La candidature : {$candidature['entreprise']} - {$candidature['poste']} a été supprimée avec succès.</p>";
+            
             // Redirection vers le tableau de bord après la suppression
             echo '<script>
                     setTimeout(function() {
