@@ -2,6 +2,7 @@
     {
         "id": "1",
         "applydate": "2024-01-01",
+        "lettre_motivation":"uploads\/motivation_1.pdf",
         "entreprise": "Données",
         "position": "Démonstration",
         "poste": "Démonstration - à supprimer",
@@ -14,7 +15,8 @@
         "date_entretien": "",
         "infostatut": "Démonstration",
         "salaire": ""
-    },{
+    },
+    {
         "id": "2",
         "applydate": "2024-03-10",
         "entreprise": "Google",

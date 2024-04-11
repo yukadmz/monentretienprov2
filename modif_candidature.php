@@ -146,6 +146,19 @@ if (!in_array($candidature['statut'], ['Config', 'En attente', 'Refusée', 'Acce
 ?>
 
 
+            <?php
+// Vérification si une date d'entretien est notée et que le statut est "Entretien passé"
+if (!empty($candidature['date_entretien']) && $candidature['statut'] === 'Entretien passé') {
+    // Calcul de la durée entre la date de l'entretien et la date actuelle
+    $entretienDate = new DateTime($candidature['date_entretien']);
+    $currentDate = new DateTime();
+    $diff = $currentDate->diff($entretienDate);
+    
+    // Affichage de la durée
+    echo "<p style='text-align: left;'>Temps écoulé depuis le dernier entretien : " . $diff->format('%a jours') . "</p>";
+}
+?>
+
             <form class="edit-form" action="modif_candidature.php?id=<?php echo $idCandidature; ?>" method="post" enctype="multipart/form-data">
                 <!-- Champs du formulaire -->
                 <label for="applydate">Date de candidature :</label>
