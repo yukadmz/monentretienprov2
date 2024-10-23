@@ -182,6 +182,39 @@ ob_start();
 QRcode::png($configuration, null, QR_ECLEVEL_L, 4);
 $qrImage = ob_get_contents();
 ob_end_clean();
+
+// Fonction pour récupérer la clé API depuis le fichier cfapi.txt
+function getApiKey() {
+    $file = 'api/cfapi.txt'; // Chemin vers le fichier
+    if (file_exists($file)) {
+        return file_get_contents($file); // Lire et retourner la clé API
+    } else {
+        return "Clé API non trouvée.";
+    }
+}
+
+// Générer l'URL du dossier API (que l'application soit à la racine ou dans un dossier)
+function getApiUrl() {
+    // On utilise le protocole (http ou https)
+    $protocol = isset($_SERVER['HTTPS']) ? "https" : "http";
+    
+    // On récupère le nom de l'hôte
+    $host = $_SERVER['HTTP_HOST'];
+
+    // On récupère le chemin du dossier courant
+    $currentDir = dirname($_SERVER['PHP_SELF']);
+    
+    // Si on est à la racine, on renvoie simplement le domaine avec "/api", sinon on inclut le dossier
+    if ($currentDir === '/' || $currentDir === '\\') {
+        return "$protocol://$host/api";
+    } else {
+        return "$protocol://$host$currentDir/api";
+    }
+}
+
+
+// Récupérer la clé API
+$apiKey = getApiKey();
 ?>
 
 <!DOCTYPE html>
@@ -211,16 +244,25 @@ ob_end_clean();
             <div class="qr-code">
                 <img src="data:image/png;base64,<?php echo base64_encode($qrImage); ?>" alt="QR Code">
             </div>
-            <button type="button" class="btn btn-green" onclick="afficherFichier('keys.php')">Initialiser les clés de signature PDF</button>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <div>
+        <label>URL DU DOSSIER API</label><br>
+        <input type="text" value="<?php echo getApiUrl(); ?>" readonly><br><br>
+
+        <label>CLE API EN CLAIR</label><br>
+        <input type="text" value="<?php echo $apiKey; ?>" readonly><br><br>
+
+        <button type="submit" name="generate_api_key">Générer une clé API</button>
+    </div>
+</form>
         </div>
     </div>
 
     <div class="admin-section">
-        <h2>Générer une clé API</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <button type="submit" name="generate_api_key">Générer une clé API</button>
-        </form>
+        <h2>Générer les certificats de signature PDF</h2>
+        <button type="button" class="btn btn-green" onclick="afficherFichier('keys.php')">Inialiser les certificats</button>
     </div>
+
 
     <div class="admin-section candidatures-section">
         <h2>Gérer les candidatures</h2>
@@ -299,7 +341,9 @@ ob_end_clean();
             <tr>
                 <th>Utilisateur</th>
                 <th>Rôle</th>
-                <th>Actions</th>
+                <th>Modif mot de passe</th>
+                <th>Modif rôle</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -314,6 +358,8 @@ ob_end_clean();
                             <input type="password" name="nouveau_mot_de_passe" placeholder="Nouveau mot de passe" style="width: 120px;">
                             <button type="submit" class="btn btn-blue">Modifier</button>
                         </form>
+                    </td>
+                    <td>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="inline-form" style="display:inline;">
                             <input type="hidden" name="action" value="modifier_role">
                             <input type="hidden" name="utilisateur" value="<?php echo $nom_utilisateur; ?>">
@@ -323,6 +369,8 @@ ob_end_clean();
                             </select>
                             <button type="submit" class="btn btn-blue">Modifier</button>
                         </form>
+                    </td>
+                    <td>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="inline-form" style="display:inline;">
                             <input type="hidden" name="action" value="supprimer">
                             <input type="hidden" name="utilisateur" value="<?php echo $nom_utilisateur; ?>">

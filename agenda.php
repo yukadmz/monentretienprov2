@@ -16,6 +16,7 @@ if (!isset($_COOKIE[$cookieName])) {
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -63,6 +64,7 @@ if (!isset($_COOKIE[$cookieName])) {
 <?php include 'assets/include/navbar.php'; ?>
 <div class="container">
     <h1>Agenda des entretiens</h1>
+
 <?php
 // Récupération des données du fichier JSON
 $candidatures = json_decode(file_get_contents('assets/data/candidatures.json'), true);
@@ -116,6 +118,16 @@ foreach ($candidatures as $key => $candidature) {
 // Si aucun entretien n'est programmé, afficher un message approprié
 if (!$entretiens_programmes) {
     echo "<p>Aucun entretien programmé pour le moment.</p>";
+}
+
+// Si des entretiens sont programmés, afficher le lien d'abonnement
+if ($entretiens_programmes) {
+    echo "<div class='card'>";
+    echo "<div class='card-content'>";
+    // Lien vers le fichier calendrier.php
+    echo "<a href='synchro_calendrier.php' class='btn' target='_blank'><i class='fas fa-calendar-plus'></i> S'abonner au calendrier</a>";
+    echo "</div>";
+    echo "</div>";
 }
 
 // Traitement du formulaire pour marquer l'entretien comme terminé
