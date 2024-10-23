@@ -1,0 +1,21 @@
+<Files "*">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<FilesMatch "\.(?i:pem)$">
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{HTTP_REFERER} !^https://axeld\.yn\.lu/monentretienpro/export_pdf\.php$ [NC]
+        RewriteRule \.pem$ - [F,NC,L]
+    </IfModule>
+</FilesMatch>
+
+
+<FilesMatch "\.(?i:pem)$">
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{HTTP_REFERER} !^https://axeld\.yn\.lu/monentretienpro/export_all_pdf\.php$ [NC]
+        RewriteRule \.pem$ - [F,NC,L]
+    </IfModule>
+</FilesMatch>

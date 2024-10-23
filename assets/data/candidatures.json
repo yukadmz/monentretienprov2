@@ -1,0 +1,134 @@
+{
+    "1": {
+        "id": "123456789abcdef",
+        "applydate": "2024-01-15",
+        "lettre_motivation": "",
+        "entreprise": "TechMedia Solutions",
+        "position": "Technicien audiovisuel",
+        "poste": "Technicien son et vidéo",
+        "lien": "https://techmedia-solutions.fr/offres/technicien-audiovisuel",
+        "contrat": "CDI",
+        "disponibilite": "Immédiate",
+        "contact": "recrutement@techmedia-solutions.fr",
+        "statut": "En cours",
+        "applymethod": "Candidature en ligne",
+        "date_entretien": "2024-01-20T10:00",
+        "deuxieme_entretien": false,
+        "infostatut": "Le 15/01/2024 09:00 : Candidature déposée\nLe 20/01/2024 10:00 : Entretien prévu",
+        "salaire": "35000",
+        "historique_statut": [
+            {
+                "date_changement": "2024-01-15 09:00:00",
+                "statut": "En attente"
+            },
+            {
+                "date_changement": "2024-01-20 10:00:00",
+                "statut": "Entretien"
+            }
+        ]
+    },
+    "2": {
+        "id": "abcdef123456789",
+        "applydate": "2024-02-01",
+        "lettre_motivation": "",
+        "entreprise": "Creative Media",
+        "position": "Chargé de production",
+        "poste": "Chef de projet audiovisuel",
+        "lien": "https://creativemedia.fr/jobs/chef-de-projet",
+        "contrat": "CDD",
+        "disponibilite": "À partir de mars 2024",
+        "contact": "contact@creativemedia.fr",
+        "statut": "En attente",
+        "applymethod": "Candidature par mail",
+        "date_entretien": "",
+        "deuxieme_entretien": false,
+        "infostatut": "Le 01/02/2024 14:30 : Candidature envoyée",
+        "salaire": "30000",
+        "historique_statut": [
+            {
+                "date_changement": "2024-02-01 14:30:00",
+                "statut": "En attente"
+            }
+        ]
+    },
+    "3": {
+        "id": "fedcba987654321",
+        "applydate": "2024-02-15",
+        "lettre_motivation": "",
+        "entreprise": "Vision Productions",
+        "position": "Monteur vidéo",
+        "poste": "Monteur sénior",
+        "lien": "https://visionproductions.fr/careers/monteur-video",
+        "contrat": "CDI",
+        "disponibilite": "À négocier",
+        "contact": "hr@visionproductions.fr",
+        "statut": "Entretien",
+        "applymethod": "Candidature en ligne",
+        "date_entretien": "2024-02-25T15:00",
+        "deuxieme_entretien": true,
+        "infostatut": "Le 15/02/2024 11:00 : Candidature soumise\nLe 25/02/2024 15:00 : Entretien programmé",
+        "salaire": "40000",
+        "historique_statut": [
+            {
+                "date_changement": "2024-02-15 11:00:00",
+                "statut": "En attente"
+            },
+            {
+                "date_changement": "2024-02-25 15:00:00",
+                "statut": "Entretien"
+            }
+        ]
+    },
+    "4": {
+        "id": "246813579bdfef",
+        "applydate": "2024-03-01",
+        "lettre_motivation": "",
+        "entreprise": "MediaWorks",
+        "position": "Coordinateur de projet",
+        "poste": "Coordinateur audiovisuel",
+        "lien": "https://mediaworks.fr/jobs/coordinateur-audiovisuel",
+        "contrat": "CDD",
+        "disponibilite": "Immédiate",
+        "contact": "jobs@mediaworks.fr",
+        "statut": "Refusée",
+        "applymethod": "Candidature en ligne",
+        "date_entretien": "",
+        "deuxieme_entretien": false,
+        "infostatut": "Le 01/03/2024 09:00 : Candidature soumise\nLe 15/03/2024 14:00 : Notification de refus",
+        "salaire": "32000",
+        "historique_statut": [
+            {
+                "date_changement": "2024-03-01 09:00:00",
+                "statut": "En attente"
+            },
+            {
+                "date_changement": "2024-03-15 14:00:00",
+                "statut": "Refusée"
+            }
+        ]
+    },
+    "5": {
+        "id": "789abcd123efgh",
+        "applydate": "2024-03-10",
+        "lettre_motivation": "",
+        "entreprise": "Digital Creators",
+        "position": "Gestionnaire de projet",
+        "poste": "Gestionnaire de projet audiovisuel",
+        "lien": "https://digitalcreators.fr/careers/gestionnaire-projet",
+        "contrat": "CDI",
+        "disponibilite": "À négocier",
+        "contact": "recrutement@digitalcreators.fr",
+        "statut": "En cours",
+        "applymethod": "Candidature en ligne",
+        "date_entretien": "",
+        "deuxieme_entretien": false,
+        "infostatut": "Le 10/03/2024 10:00 : Candidature envoyée",
+        "salaire": "37000",
+        "historique_statut": [
+            {
+                "date_changement": "2024-03-10 10:00:00",
+                "statut": "En attente"
+            }
+        ]
+    }
+}
